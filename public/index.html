@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <title>Recipe App</title>
+        <link rel="icon" href="/images/favicon.png">
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <link rel="stylesheet" href="/styles/styles.css">
+    </head>
+
+    <body>
+        <header class="header">
+            <div class="container">
+                <h1 class="header__title">Recipes Gallor</h1>
+            </div>
+        </header>
+        <div class="actions">
+            <div class="actions__container">
+                Search: <input id="search-text" type="text" class="input" placeholder="to find recipe type here">
+                <select id="filter-by" class="dropdown">
+                    <option value = "byEditied">sort by last edied</option>
+                    <option value="byCreated">sort by recently created</option>
+                    <option value="byAlphabetacal">sort by alphabetacly</option>
+                </select>
+            </div>
+        </div>
+        <div class="header">
+            <div class="container">
+                <h2 class="header__title">List of new Recipes</h2>
+            </div>
+        </div>
+        <div class="container">
+            <div id="recipeList"></div>
+            <button id="create-recipe" class="button">Create Recipe</button>
+        </div>
+        
+        <script src = "/scripts/index-bundle.js"></script>
+    </body>
+</html>
