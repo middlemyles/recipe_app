@@ -1,4 +1,4 @@
-//MAKE SURE TO USE NODE VERSION v16.20.0
+//todo: MAKE SURE TO USE NODE VERSION v16.20.0
 
 import "core-js/stable"
 import "@babel/polyfill";

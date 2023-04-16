@@ -1,3 +1,5 @@
+//todo: MAKE SURE TO USE NODE VERSION v16.20.0
+
 import { initializeEditPage, genterateLastEdited, renderIngredients } from './views'
 import { updateRecipe, removeRecipe, } from './recipe'
 import { createIngredients } from './ingredients'
