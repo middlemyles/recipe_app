@@ -1,5 +1,6 @@
 import moment from 'moment'
 import { getFilters } from './filters'
+import { getIngredients, removeIngredient, toggleIngredient, ingredientMessage } from './ingredients'
 import { sortRecipes, getRecipes, removeRecipe, toggleRecipe } from './recipe'
 
 // generate the dom structure for a note
@@ -55,10 +56,13 @@ const renderRecipe = () => {
 const initializeEditPage = (recipeId) => {
     const titleElement = document.querySelector('#recipe-title')
     const bodyElement = document.querySelector('#recipe-body')
+    const ingredientElement = document.querySelector('#ingredientsContainer')
     const dateElement = document.querySelector('#last-edited')
     const recipes = getRecipes()
+    const ingredients = getIngredients()
 
     const recipeCard = recipes.find((recipe) => recipe.id === recipeId)
+    const ingredientCard = ingredients.find((ingredient) => ingredient.id === recipeId)
 
     if (!recipeCard) {
         location.assign('/index.html')
@@ -69,9 +73,74 @@ const initializeEditPage = (recipeId) => {
     dateElement.textContent = genterateLastEdited(recipeCard.updatedAt)
 }
 
+const renderIngredients = () => {
+    const ingredientElement = document.querySelector('#ingredientsContainer')
+    const { searchText, hideCompleted } = getFilters()
+
+    const filterIngredients = getIngredients().filter((ingredient) => {
+        const searchTextMatch = ingredient.text.toLowerCase().includes(searchText.toLowerCase())
+        const hideCompletedMatched = !hideCompleted || !ingredient.completed
+
+        return searchTextMatch && hideCompletedMatched
+    })
+
+    ingredientElement.innerHTML = ''
+
+    if (filterIngredients.length > 0) {
+        filterIngredients.forEach((ingredient) =>  {
+            const ingredientsElement = (generateIngredientDOM(ingredient))
+            document.querySelector('#ingredientsContainer').appendChild(ingredientsElement)
+        })
+    } else {
+        const messageElement = document.createElement('p')
+        messageElement.classList.add('empty-message')
+        messageElement.textContent = `have not added any ingredients`
+        ingredientElement.appendChild(messageElement)
+    }
+}
+
+const generateIngredientDOM = (ingredient) => {
+    const ingredientElement = document.createElement('lable')
+    const containerElement = document.createElement('div')
+    const checkbox = document.createElement('input')
+    const textElement = document.createElement('span')
+    const removeButton = document.createElement('button')
+
+    // setting up the ingredients checkboxes
+    checkbox.setAttribute('type', 'checkbox')
+    checkbox.classList.add('ingredient-checkbox')
+    checkbox.checked = ingredient.completed
+    containerElement.appendChild(checkbox)
+
+    //add event listent to checkboxes
+    checkbox.addEventListener('change', (event) => {
+        toggleIngredient(ingredient.id)
+        renderIngredients(ingredient.id)
+    })
+
+    //set up the ingredient text
+    textElement.textContent = ingredient.text
+    containerElement.appendChild(textElement)
+
+    //set up container
+    ingredientElement.classList.add('ingredient-item')
+    containerElement.classList.add('ingredient-item__container')
+    ingredientElement.appendChild(containerElement)
+
+    // setting up the remove button
+    removeButton.textContent = 'remove'
+    removeButton.classList.add('button', 'button--text')
+    ingredientElement.appendChild(removeButton)
+    removeButton.addEventListener('click', (event) => {
+        removeIngredient(ingredient.id)
+        renderIngredients(ingredient.id)
+    })
+    return ingredientElement
+}
+
 //generate the last edited message
 const genterateLastEdited = (timestamp) => {
     return `last edited ${moment(timestamp).fromNow()}`
 }
 
-export { generateRecipeDOM, renderRecipe, genterateLastEdited, initializeEditPage }
+export { generateRecipeDOM, renderRecipe, genterateLastEdited, initializeEditPage, renderIngredients, generateIngredientDOM }

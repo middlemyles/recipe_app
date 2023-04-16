@@ -1,3 +1,5 @@
+//MAKE SURE TO USE NODE VERSION v16.20.0
+
 import "core-js/stable"
 import "@babel/polyfill";
 import { getRecipes, removeRecipe, sortRecipes, updateRecipe, createRecipe } from "./recipe"

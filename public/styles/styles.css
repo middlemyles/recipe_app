@@ -176,6 +176,36 @@ a {
     justify-content: end;
 }
 
+.ingredient-item {
+    text-decoration: none;
+    color: #fafafa;
+    cursor: pointer;
+    background: #353239;
+    border: 1px solid #423e47;
+    margin: 1.6rem 0;
+    padding: 1rem 1.6rem;
+    display: block;
+    transition: background .3s ease;
+    display: flex;
+    justify-content: space-between;
+    align-items: center
+}
+
+.ingredient-item:hover {
+    background-color: #3d3941;
+}
+
+.ingredient-item__container {
+    display: flex;
+    font-size: 1.8rem;
+    font-weight: 300;
+    align-items: baseline;
+}
+
+.ingredient-checkbox {
+    margin-right: .8rem;
+}
+
 .empty-message {
     text-align: center;
     margin: 3.2rem 0;

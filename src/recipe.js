@@ -19,9 +19,6 @@ const savedRecipe = () => {
     localStorage.setItem('recipeList', JSON.stringify(recipeList))
 }
 
-const savedIngredient = () => {
-    
-}
 
 // expose notes from module
 const getRecipes = () => recipeList
